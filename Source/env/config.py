@@ -19,3 +19,7 @@ class Config():
     @property
     def admin(self) -> list[int]:
         return list(map(int, self.config['ADMIN'].values()))
+
+    @property
+    def notification(self) -> list[int]:
+        return list(map(int, self.config['NOTIFICATION'].values()))
