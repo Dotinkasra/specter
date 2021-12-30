@@ -5,7 +5,8 @@ from dislash import InteractionClient
 import discord
 
 INITIAL_EXTENSIONS = [
-    'Source.cogs.mute_notification'
+    'Source.cogs.mute_notification',
+    'Source.cogs.get_userinfo'
 ]
 
 config = Config()
