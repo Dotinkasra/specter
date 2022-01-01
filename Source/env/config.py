@@ -6,7 +6,6 @@ class Config():
         path = os.path.join(os.path.dirname(__file__), 'config.ini')
         self.config = configparser.ConfigParser()
         self.config.read(path, 'UTF-8')
-        print(self.config.sections())
 
     @property
     def token(self) -> str:
@@ -23,3 +22,11 @@ class Config():
     @property
     def notification(self) -> list[int]:
         return list(map(int, self.config['NOTIFICATION'].values()))
+
+    @property
+    def ifttt_event(self) -> str:
+        return str(self.config['IFTTT']['EVENT'])
+
+    @property
+    def ifttt_key(self) -> str:
+        return str(self.config['IFTTT']['KEY'])
