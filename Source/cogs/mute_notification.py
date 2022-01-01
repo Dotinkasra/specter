@@ -1,12 +1,14 @@
 import subprocess
-from discord import message
+import requests
 from discord.ext import commands
 from Source.env.config import Config
-from subprocess import PIPE
 
 config = Config()
 admin = config.admin
 notification = config.notification
+ifttt_event = config.ifttt_event
+ifttt_key = config.ifttt_key
+url = f'https://maker.ifttt.com/trigger/{ifttt_event}/json/with/key/{ifttt_key}'
 
 class MuteNotification(commands.Cog):
     def __init__(self, bot):
@@ -25,21 +27,29 @@ class MuteNotification(commands.Cog):
         
         display_avatar = member.display_avatar.url
         if before.channel is None and after.channel is not None:
-            title = "参加通知"
-            message = member.display_name + "さんが" + after.channel.name + "に参加しました"
+            title = f"{member.display_name} (#{after.channel.name}, {after.channel.category})"
+            message = "通話に参加しました"
 
         if before.channel is not None and after.channel is None:
-            title = "切断通知"
-            message = member.display_name + "さんが通話を切断しました"
+            title = f"{member.display_name} (#{before.channel.name}, {before.channel.category})"
+            message = "通話を切断しました"
 
         if not before.self_mute and after.self_mute:
-            title = "ミュート通知"
-            message = member.display_name + "さんがミュートになりました"
+            title = f"{member.display_name} (#{before.channel.name}, {before.channel.category})"
+            message = "ミュートしました"
         
         if before.self_mute and not after.self_mute:
-            title = "ミュート解除通知"
-            message = member.display_name + "さんがミュートを解除しました"
+            title = f"{member.display_name} (#{after.channel.name}, {before.channel.category})"
+            message = "ミュート解除しました"
+
+        if title is None or message is None:
+            return
+
+        payload = {"value1" : f"{title}, {message}"}
+        headers = {'Content-Type': "application/json"}
+        requests.post(url, json = payload, headers = headers)
         subprocess.run(["terminal-notifier", "-title", title, "-message", message, "-contentImage", display_avatar, "-sender", "com.hnc.Discord"])
+
 
 def setup(bot):
     return bot.add_cog(MuteNotification(bot))
