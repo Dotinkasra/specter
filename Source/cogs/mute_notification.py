@@ -2,13 +2,11 @@ import subprocess
 import requests
 from discord.ext import commands
 from Source.env.config import Config
+from Source.module.sub_commands import subcommands
 
 config = Config()
 admin = config.admin
 notification = config.notification
-ifttt_event = config.ifttt_event
-ifttt_key = config.ifttt_key
-url = f'https://maker.ifttt.com/trigger/{ifttt_event}/json/with/key/{ifttt_key}'
 
 class MuteNotification(commands.Cog):
     def __init__(self, bot):
@@ -24,7 +22,7 @@ class MuteNotification(commands.Cog):
         #通知対象のメンバーではない場合、処理を終了
         if member.id not in notification:
             return
-        
+        title = message = None
         display_avatar = member.display_avatar.url
         if before.channel is None and after.channel is not None:
             title = f"{member.display_name} (#{after.channel.name}, {after.channel.category})"
@@ -45,11 +43,8 @@ class MuteNotification(commands.Cog):
         if title is None or message is None:
             return
 
-        payload = {"value1" : f"{title}, {message}"}
-        headers = {'Content-Type': "application/json"}
-        requests.post(url, json = payload, headers = headers)
-        subprocess.run(["terminal-notifier", "-title", title, "-message", message, "-contentImage", display_avatar, "-sender", "com.hnc.Discord"])
-
+        subcommands.send_webhook({"value1" : f"{title}, {message}"})
+        subcommands.notification_mac(title = title, message = message, content_image = display_avatar)
 
 def setup(bot):
     return bot.add_cog(MuteNotification(bot))
