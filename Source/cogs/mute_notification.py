@@ -1,5 +1,3 @@
-import subprocess
-import requests
 from discord.ext import commands
 from Source.env.config import Config
 from Source.module.sub_commands import subcommands

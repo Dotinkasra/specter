@@ -1,7 +1,6 @@
-from discord import guild
 from Source.env.config import Config
 from discord.ext import commands
-from dislash import slash_command, ActionRow, Button, ButtonStyle, Option, OptionType
+from dislash import slash_command, Option, OptionType
 import discord
 
 config = Config()
