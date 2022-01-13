@@ -6,7 +6,8 @@ import discord
 
 INITIAL_EXTENSIONS = [
     'Source.cogs.mute_notification',
-    'Source.cogs.get_userinfo'
+    'Source.cogs.get_userinfo',
+    'Source.cogs.hard_filter',
 ]
 
 config = Config()
