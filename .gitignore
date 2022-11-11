@@ -1,3 +1,11 @@
 __pycache__
 *.ini
 .DS_Store
+*.png
+*.JPG
+*.db
+*.mp4
+*.m4a
+*.mp3
+*.mov
+*.heic

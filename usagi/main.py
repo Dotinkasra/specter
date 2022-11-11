@@ -5,16 +5,14 @@ from dislash import InteractionClient
 import discord
 
 INITIAL_EXTENSIONS = [
-    'Source.cogs.mute_notification',
-    'Source.cogs.get_userinfo',
-    'Source.cogs.hard_filter',
+    'Source.cogs.Calc',
 ]
 
 config = Config()
 
 intents = discord.Intents.all()
 TOKEN = config.token
-bot = commands.Bot(command_prefix='h!', intents = intents)
+bot = commands.Bot(command_prefix='u!', intents = intents)
 inter_client = InteractionClient(bot)
 guilds = config.guilds
 

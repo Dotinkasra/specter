@@ -30,3 +30,11 @@ class Config():
     @property
     def ifttt_key(self) -> str:
         return str(self.config['IFTTT']['KEY'])
+
+    @property
+    def ubernikki(self) -> str:
+        return str(self.config['CHANNEL']['UBERNIKKI'])
+
+    @property
+    def speaker(self) -> dict:
+        return dict(self.config['SPEAKER'])

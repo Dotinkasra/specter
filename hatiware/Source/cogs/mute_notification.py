@@ -18,8 +18,8 @@ class MuteNotification(commands.Cog):
     async def on_voice_state_update(self, member, before, after):
 
         #通知対象のメンバーではない場合、処理を終了
-        if member.id not in notification:
-            return
+        #if member.id not in notification:
+        #    return
         title = message = None
         display_avatar = member.display_avatar.url
         if before.channel is None and after.channel is not None:
@@ -41,8 +41,9 @@ class MuteNotification(commands.Cog):
         if title is None or message is None:
             return
 
-        subcommands.send_webhook({"value1" : f"{title}, {message}"})
-        subcommands.notification_mac(title = title, message = message, content_image = display_avatar)
+        #subcommands.send_webhook({"value1" : f"{title}, {message}"})
+        #subcommands.notification_mac(title = title, message = message, content_image = display_avatar)
+        subcommands.send_notification_by_socket(title = title, message = message, content_image = display_avatar)
 
 def setup(bot):
     return bot.add_cog(MuteNotification(bot))
