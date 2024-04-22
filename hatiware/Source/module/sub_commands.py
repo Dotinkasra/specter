@@ -2,6 +2,7 @@ import subprocess, requests
 from Source.env.config import Config
 import socket
 import pickle
+import discord
 
 class subcommands():
     config = Config()
@@ -31,6 +32,7 @@ class subcommands():
             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
             s.send(pickle.dumps({
+                "type" : "cmd",
                 "title": title,
                 "message": message,
                 "sender": content_image,
@@ -40,3 +42,24 @@ class subcommands():
         except Exception as e:
             print(e)
             return
+
+    @classmethod
+    def send_wav_by_socket(self, wav_obj) -> None:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect(("192.168.11.76", 14444))
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+            s.send(pickle.dumps({
+                "type" : "wave",
+                "content" : wav_obj
+            }))
+        except Exception as e:
+            print(e)
+            return
+        
+    @classmethod
+    def is_dorakasu(self, user: discord.User):
+        if user.id == 701781200288743434:
+            return True
+        return False

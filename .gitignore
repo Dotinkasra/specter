@@ -9,3 +9,6 @@ __pycache__
 *.mp3
 *.mov
 *.heic
+*.jpeg
+*.webp
+*.db*

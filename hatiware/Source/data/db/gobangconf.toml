@@ -1,0 +1,10 @@
+[[conn]]
+type = "sqlite"
+path = "./banlist.db"
+[[conn]]
+type = "sqlite"
+path = "./image_log.db"
+[[conn]]
+type = "sqlite"
+path = "./sabarunikki.db"
+
